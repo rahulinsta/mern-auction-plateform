@@ -3,6 +3,8 @@ import {config} from "dotenv";
 import { v2 as cloudinary } from "cloudinary";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import fileUpload from "express-fileupload";
+import { connection } from "./database/connection.js";
 
   // Configuration
   cloudinary.config({ 
@@ -21,9 +23,17 @@ app.use(cors({
     origin: process.env.FRONTEND_URL,
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true
-}))
+}));
 
-app.use(cookieParser())
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tem/"
+}));
+
+connection()
 
 export {app}
