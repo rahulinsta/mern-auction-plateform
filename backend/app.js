@@ -1,18 +1,11 @@
 import express from "express";
 import {config} from "dotenv";
-import { v2 as cloudinary } from "cloudinary";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { connection } from "./database/connection.js";
 import { errorMiddleware } from "./middlewares/error.js";
-
-  // Configuration
-  cloudinary.config({ 
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
-    api_key: process.env.CLOUDINARY_API_KEY, 
-    api_secret: process.env.CLOUDINARY_API_SECRET // Click 'View API Keys' above to copy your API secret
-});
+import userRouter from "./router/user.router.js"
 
 config({
     path: "./config/config.env"
@@ -32,8 +25,14 @@ app.use(express.urlencoded({extended:true}));
 
 app.use(fileUpload({
     useTempFiles: true,
-    tempFileDir: "/tem/"
+    tempFileDir: "./temp/"
 }));
+
+//router configuration 
+
+app.use("/api/v1/users", userRouter);
+
+
 
 connection()
 

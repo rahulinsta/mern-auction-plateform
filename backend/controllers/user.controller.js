@@ -1,5 +1,6 @@
 import errorHanlder from "../middlewares/error.js";
 import { v2 as cloudinary } from "cloudinary";
+import {User} from "../models/user.model.js"
 export const register = async (req, res, next) =>{
 
     if(!req.files || Object.keys(req.files).length === 0){
@@ -7,6 +8,7 @@ export const register = async (req, res, next) =>{
     }
 
     const {profileImage} = req.files;
+
     const allowedImageTypes = ["image/png", "image/jpeg", "image/webp"];
 
     if(!allowedImageTypes.includes(profileImage.mimetype)){
@@ -18,7 +20,7 @@ export const register = async (req, res, next) =>{
     } = req.body;
 
     if(!username || !password || !email || !address || !phone || !role){
-        return next(errorHanlder("Please provide all the details", 400));
+        return next(new errorHanlder("Please provide all the details", 400));
     }
 
     if( role === "Auctioneer" ){
@@ -36,12 +38,12 @@ export const register = async (req, res, next) =>{
         }
     }
 
-    const checkExistingUser = await User.find({email});
+    const checkExistingUser = await User.findOne({email: email});
     if(checkExistingUser){
         return next(new errorHanlder("User already registered", 400));
     }
 
-    const cloudinaryRespose = await cloudinary.uploader.upload(profileImage, {
+    const cloudinaryRespose = await cloudinary.uploader.upload(profileImage.tempFilePath, {
         folder: "MERN_AUCTION_PLATEFORM_USERS"
     })
 
@@ -54,6 +56,36 @@ export const register = async (req, res, next) =>{
         res.next(new errorHanlder("Fail to upload profile iamge on cloudinary", 500));
     }
 
+    const createdUser = await User.create({
+        username, password, email, address, phone, bankAccountNumber,
+        profileImage:{
+            public_id : cloudinaryRespose.public_id,
+            url: cloudinaryRespose.secure_url
+        },
+        paymentMethods: {
+            bankTransfer: {
+                bankAccountNumber,
+                bankAccountName,
+                bankName
+            },
 
+            phonePay:{
+                phonePayMobileNumber
+            },
 
+            payPal: {
+                payPalEmail
+            }
+        },
+    })
+
+    if(!createdUser){
+        return res.next(new errorHanlder("Something went wrong while inseting user to database", 500));
+    }
+
+    return res.status(200).json({
+        success: true,
+        message: "User created successfully",
+        data: createdUser
+    })
 };

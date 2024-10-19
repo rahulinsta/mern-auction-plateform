@@ -4,15 +4,15 @@ const userSchema = mongoose.Schema(
     {
         username: {
             type: String,
-            required: [ture, "Username is required"],
+            required: [true, "Username is required"],
             minLength: [5, "Username must be atleast 5 characters"],
             maxLength: [32, "Username must not exeed 32 characters"],
-            unique: ture
+            unique: true
         },
 
         password: {
             type: String,
-            required: [ture, "Password is required"],
+            required: [true, "Password is required"],
             minLength: [8, "Password must be atleast 8 characters"],
             maxLength: [16, "Password must not exeed 32 characters"],
             selected: false
@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema(
 
         phone: {
             type: String,
-            required: [ture, "Phone is required"],
+            required: [true, "Phone is required"],
             minLength: [, "Password must be atleast 8 characters"],
             maxLength: [16, "Password must not exeed 32 characters"],
         },
@@ -84,4 +84,6 @@ const userSchema = mongoose.Schema(
     },
     {timestamps: true})
 
-    export const User = mongoose.model("User", userSchema );
+const User = mongoose.model("User", userSchema );
+
+export {User}
