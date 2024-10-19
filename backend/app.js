@@ -5,6 +5,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { connection } from "./database/connection.js";
+import { errorMiddleware } from "./middlewares/error.js";
 
   // Configuration
   cloudinary.config({ 
@@ -35,5 +36,7 @@ app.use(fileUpload({
 }));
 
 connection()
+
+app.use(errorMiddleware)
 
 export {app}
