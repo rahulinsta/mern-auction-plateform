@@ -1,0 +1,59 @@
+# Node modules  
+/backend/node_modules/  
+frontend/node_modules/  
+
+# Build output  
+/build/  
+/dist/  
+
+# Logs  
+logs  
+*.log  
+npm-debug.log*  
+
+# Environment variables  
+/backend/config/config.env
+.env
+config.env  
+.env.local  
+.env.development.local  
+.env.test.local  
+.env.production.local  
+
+# Coverage directory used by tools like istanbul  
+/coverage/  
+
+# Next.js build output (if using Next.js)  
+.next/  
+
+# Misc  
+.DS_Store  
+Thumbs.db  
+
+# React native  
+.expo/  
+*.expo/  
+expo-cli/  
+
+# VS Code settings  
+.vscode/  
+
+# JetBrains IDE  
+.idea/  
+
+# Yarn integrity file  
+.yarn-integrity  
+
+# Package logs  
+package-lock.json  
+yarn.lock  
+
+# Temporary files  
+*.tmp  
+*.temp  
+
+# local files  
+*.local  
+
+# Serverless  
+.serverless/
