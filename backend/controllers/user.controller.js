@@ -109,7 +109,7 @@ export const login = catchAsyncErrors (async (req, res, next) => {
     if(!checkPassword){
         return next(new errorHanlder("Invalid credentilas", 400));
     }
-    
+
     jsonWebToken(user, 200, "User logged in successfully", res);
 
 
@@ -121,7 +121,12 @@ export const logout = catchAsyncErrors (async (req, res, next) => {
 });
 
 export const getProfile = catchAsyncErrors (async (req, res, next) => {
-
+    const user = req.user;
+    res.status(200).json({
+        success: true,
+        data: user,
+        message: "Profile retrived successfully"
+    })
 });
 
 export const getLeaderBoard = catchAsyncErrors (async (req, res, next) => {
