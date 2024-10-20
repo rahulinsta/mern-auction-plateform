@@ -96,7 +96,7 @@ userSchema.methods.comparePassword = async (password) =>{
     return await bcrypt.compare(password, this.password);
 }
 
-userSchema.methods.generateJwtToken = async () =>{
+userSchema.methods.generateJwtToken = async function(){
 
     return jwt.sign({id: this._id}, process.env.JWT_SECRETE_KEY, {
         expiresIn: process.env.JWT_EXPIRE_IN

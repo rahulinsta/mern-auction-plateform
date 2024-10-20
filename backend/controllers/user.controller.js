@@ -2,6 +2,7 @@ import errorHanlder from "../middlewares/error.js";
 import { v2 as cloudinary } from "cloudinary";
 import {User} from "../models/user.model.js"
 import catchAsyncErrors from "../middlewares/catch.async.error.js";
+import { jsonWebToken } from "../utills/jsonwebtoken.js";
 export const register = catchAsyncErrors (async (req, res, next) =>{
 
     if(!req.files || Object.keys(req.files).length === 0){
@@ -84,9 +85,6 @@ export const register = catchAsyncErrors (async (req, res, next) =>{
         return res.next(new errorHanlder("Something went wrong while inseting user to database", 500));
     }
 
-    return res.status(200).json({
-        success: true,
-        message: "User created successfully",
-        data: createdUser
-    })
+    jsonWebToken(createdUser, 201, "User created successfully", res);
+
 });
