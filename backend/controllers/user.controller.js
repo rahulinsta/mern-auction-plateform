@@ -117,7 +117,13 @@ export const login = catchAsyncErrors (async (req, res, next) => {
 });
 
 export const logout = catchAsyncErrors (async (req, res, next) => {
-
+    return res.status(200).cookie("accessToken", "", {
+        expires: new Date(Date.now()),
+        httpOnly: true
+    }).json({
+        success: true,
+        message: "User logged out successfully"
+    })
 });
 
 export const getProfile = catchAsyncErrors (async (req, res, next) => {
@@ -130,5 +136,10 @@ export const getProfile = catchAsyncErrors (async (req, res, next) => {
 });
 
 export const getLeaderBoard = catchAsyncErrors (async (req, res, next) => {
-
+    const users = await User.find({moneySpent : {$gt: 0}});
+    const leaderBoard = users.sort((a, b)=> b.moneySpent - a.moneySpent);
+    return res.status(200).json({
+        success: true,
+        data: leaderBoard
+    })
 });
