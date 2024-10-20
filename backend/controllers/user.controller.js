@@ -109,6 +109,7 @@ export const login = catchAsyncErrors (async (req, res, next) => {
     if(!checkPassword){
         return next(new errorHanlder("Invalid credentilas", 400));
     }
+    
     jsonWebToken(user, 200, "User logged in successfully", res);
 
 
