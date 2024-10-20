@@ -92,6 +92,27 @@ export const register = catchAsyncErrors (async (req, res, next) =>{
 
 export const login = catchAsyncErrors (async (req, res, next) => {
 
+    const {email, password} = req.body;
+    if(!email){
+        return next(new errorHanlder("Please provide email", 400));
+    }
+    if(!password){
+        return next(new errorHanlder("Please provide password", 400));
+    }
+
+    const user = await User.findOne({email}).select("+password");
+    if(!user){
+        return next(new errorHanlder("User is not registered", 400));
+    }
+
+    const checkPassword = await user.comparePassword(password);
+    if(!checkPassword){
+        return next(new errorHanlder("Invalid credentilas", 400));
+    }
+    jsonWebToken(user, 200, "User logged in successfully", res);
+
+
+
 });
 
 export const logout = catchAsyncErrors (async (req, res, next) => {
