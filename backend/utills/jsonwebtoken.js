@@ -8,7 +8,7 @@ export const jsonWebToken = async (user, statusCode, message, res) => {
     },
     ).json({
         success: true,
-        user,
+        data: user,
         message,
         accessToken
     })
