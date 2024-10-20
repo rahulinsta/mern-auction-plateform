@@ -41,10 +41,11 @@ export const createAuctionItem = catchAsyncErrors( async (req, res, next)=>{
     }
 
     const activeAuction = await Auction.find({
+        createdBy: req.user._id,
         endTime: {$gt: Date.now()}
     })
-
-    if(activeAuction){
+   
+    if(activeAuction.length > 0){
         return next(new errorHanlder("You already have an active auction", 400));
     }
 
