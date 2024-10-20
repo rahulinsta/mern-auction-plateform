@@ -60,7 +60,7 @@ export const register = catchAsyncErrors (async (req, res, next) =>{
     }
 
     const createdUser = await User.create({
-        username, password, email, address, phone, bankAccountNumber,
+        username, password, email, address, phone, bankAccountNumber,role,
         profileImage:{
             public_id : cloudinaryRespose.public_id,
             url: cloudinaryRespose.secure_url

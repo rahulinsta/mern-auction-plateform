@@ -19,3 +19,14 @@ export const isUserAuthenticated = catchAsyncErrors(async (req, res, next)=>{
     next();
 
 });
+
+export const isAuthorized = (...role) =>{
+    return (req, res, next)=>{
+        if(!role.includes(req.user.role)){
+            return next(
+                new errorHanlder(`${req.user.role} is not allowed to access this resource`, 403)
+                )
+        }
+        next();
+    }
+}
