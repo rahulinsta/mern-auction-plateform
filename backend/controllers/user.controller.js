@@ -1,7 +1,8 @@
 import errorHanlder from "../middlewares/error.js";
 import { v2 as cloudinary } from "cloudinary";
 import {User} from "../models/user.model.js"
-export const register = async (req, res, next) =>{
+import catchAsyncErrors from "../middlewares/catch.async.error.js";
+export const register = catchAsyncErrors (async (req, res, next) =>{
 
     if(!req.files || Object.keys(req.files).length === 0){
         return next(new errorHanlder("User profile image is required", 400))
@@ -88,4 +89,4 @@ export const register = async (req, res, next) =>{
         message: "User created successfully",
         data: createdUser
     })
-};
+});
