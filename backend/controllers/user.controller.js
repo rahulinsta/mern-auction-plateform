@@ -3,6 +3,7 @@ import { v2 as cloudinary } from "cloudinary";
 import {User} from "../models/user.model.js"
 import catchAsyncErrors from "../middlewares/catch.async.error.js";
 import { jsonWebToken } from "../utills/jsonwebtoken.js";
+
 export const register = catchAsyncErrors (async (req, res, next) =>{
 
     if(!req.files || Object.keys(req.files).length === 0){
@@ -86,5 +87,21 @@ export const register = catchAsyncErrors (async (req, res, next) =>{
     }
 
     jsonWebToken(createdUser, 201, "User created successfully", res);
+
+});
+
+export const login = catchAsyncErrors (async (req, res, next) => {
+
+});
+
+export const logout = catchAsyncErrors (async (req, res, next) => {
+
+});
+
+export const getProfile = catchAsyncErrors (async (req, res, next) => {
+
+});
+
+export const getLeaderBoard = catchAsyncErrors (async (req, res, next) => {
 
 });
