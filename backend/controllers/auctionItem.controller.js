@@ -3,6 +3,7 @@ import { Auction } from "../models/auction.model.js"
 import catchAsyncErrors from "../middlewares/catch.async.error.js"
 import errorHanlder from "../middlewares/error.js"
 import { v2 as cloudinary } from "cloudinary";
+import mongoose from "mongoose";
 
 export const createAuctionItem = catchAsyncErrors( async (req, res, next)=>{
 
@@ -91,4 +92,39 @@ export const createAuctionItem = catchAsyncErrors( async (req, res, next)=>{
     }
 
 
-})
+});
+
+export const getAllItems = catchAsyncErrors(async(req, res, next)=>{
+    const allItems = await Auction.find();
+    return res.status(200).json({
+        success: true,
+        data: allItems,
+        message: "Items retrived successfully"
+    })
+});
+export const getMyAuctionIems = catchAsyncErrors(async(req, res, next)=>{});
+
+export const getAuctionDetails = catchAsyncErrors(async(req, res, next)=>{
+    const {id} = req.params;
+    console.log(id);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return next(new errorHanlder("Invalid ID format", 400));
+    }
+
+    const item = await Auction.findById(id);
+
+    if(!item){
+        return next(new errorHanlder("Auction not found", 404)); 
+    }
+
+    const bidders = item.bids.sort((a,b)=> b.bid - a.bid);
+
+    return res.status(200).json({
+        success: true,
+        data:{item, bidders},
+        message: "Item details retrived successfully"
+    })
+
+});
+export const removeAuctionItem = catchAsyncErrors(async(req, res, next)=>{});
+export const replublishItem = catchAsyncErrors(async(req, res, next)=>{});
