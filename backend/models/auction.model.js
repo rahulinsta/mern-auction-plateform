@@ -4,6 +4,11 @@ const auctionSchema = new Schema({
     title: String,
     description: String,
     startingBid: String,
+    category:String,
+    condition:{
+        type: String,
+        enum: ["New", "Used"]
+    },
     currentBid:{
         type: Number,
         default:0
