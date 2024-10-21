@@ -39,10 +39,10 @@ export const placeBid = catchAsyncErrors( async(req, res, next)=>{
 
         if(existingBid && existingBidInAuction){
             existingBid.amount = amount;
-            existingBidInAuction.amount = amount
+            existingBidInAuction.amount = amount;
             await existingBid.save();
-            await existingBidInAuction.save();
             auctionItem.currentBid = amount;
+            
         }else{
             const bidderDetails = await User.findById(req.user._id);
             
@@ -62,15 +62,16 @@ export const placeBid = catchAsyncErrors( async(req, res, next)=>{
                 profileImage: bidderDetails.profileImage?.url,
                 amount
             });
-
-            await auctionItem.save();
-
-            return res.status(201).json({
-                success: true,
-                data: {currentbid: auctionItem.currentBid}
-            });
+            auctionItem.currentBid = amount;
         }
 
+        await auctionItem.save();
+
+        return res.status(201).json({
+            success: true,
+            message: "Bid placed successfully",
+            data: {currentbid: auctionItem.currentBid}
+        });
 
     } catch (error) {
         
