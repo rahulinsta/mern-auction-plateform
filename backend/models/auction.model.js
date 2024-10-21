@@ -1,4 +1,5 @@
 import mongoose, {Schema} from "mongoose";
+import { AUCTION_CATEGORY } from "../constant.js";
 
 const auctionSchema = new Schema({
     title: String,
@@ -7,7 +8,7 @@ const auctionSchema = new Schema({
     category:String,
     condition:{
         type: String,
-        enum: ["New", "Used"]
+        enum: AUCTION_CATEGORY
     },
     currentBid:{
         type: Number,

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { COMMISSION_PAYMENT_STAUTS } from "../constant.js";
 
 const commissionProofShcema = new mongoose.Schema({
     userId: {
@@ -22,7 +23,7 @@ const commissionProofShcema = new mongoose.Schema({
     amount:Number,
     status:{
         type: String,
-        enum: ["Pending", "Approved", "Reject", "Settle"],
+        enum: COMMISSION_PAYMENT_STAUTS,
         default: "Pending"
     },
     comment:String

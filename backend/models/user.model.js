@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { ROLES } from "../constant.js";
 
 const userSchema = mongoose.Schema(
     {
@@ -65,7 +66,7 @@ const userSchema = mongoose.Schema(
 
         role: {
             type: String,
-            enum: ["Auctioneer", "Bidder", "Super Admin"]
+            enum: ROLES
         },
 
         unpaidCommission: {
