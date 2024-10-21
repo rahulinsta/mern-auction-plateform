@@ -13,7 +13,7 @@ const commissionProofShcema = new mongoose.Schema({
             required: true
         },
 
-        public_id: {
+        url: {
             type: String,
             required: true
         }
