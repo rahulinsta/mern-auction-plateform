@@ -7,7 +7,8 @@ import { connection } from "./database/connection.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import userRouter from "./router/user.router.js"
 import auctionItemRouter from "./router/auctionItems.router.js"
-import bidRouter from "./router/bid.router.js"
+import bidRouter from "./router/bid.router.js";
+import commissionRouter from "./router/commissionPayment.router.js"
 
 config({
     path: "./config/config.env"
@@ -35,6 +36,7 @@ app.use(fileUpload({
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auctionitem", auctionItemRouter);
 app.use("/api/v1/bid", bidRouter );
+app.use("/api/v1/commission", commissionRouter)
 
 
 
