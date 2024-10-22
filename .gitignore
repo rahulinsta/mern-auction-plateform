@@ -2,6 +2,8 @@
 /backend/node_modules/  
 frontend/node_modules/  
 
+/backend/temp/
+
 # Build output  
 /build/  
 /dist/  
